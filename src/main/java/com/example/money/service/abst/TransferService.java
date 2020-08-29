@@ -11,8 +11,9 @@ import java.util.List;
 
 public interface TransferService {
 
+
     @Transactional
-    void transfer(TransferStory transferStory, String name, String surname, int senderId) throws CardNotFoundException, WrongBalanceException, SameCardNumbersException, IllegalDoingException;
+    void transfer(TransferStory transferStory, String name, String surname, int senderId, String username) throws CardNotFoundException, WrongBalanceException, SameCardNumbersException, IllegalDoingException;
 
     List<TransferStory> getAll();
 

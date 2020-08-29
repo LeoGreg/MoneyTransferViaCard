@@ -5,6 +5,7 @@ import com.example.money.model.active.TransferStory;
 import com.example.money.repository.PayCardRepository;
 import com.example.money.repository.TransferRepository;
 import com.example.money.service.abst.TransferService;
+import com.example.money.util.components.MailSenderClient;
 import com.example.money.util.exception.card.except.CardNotFoundException;
 import com.example.money.util.exception.card.handler.PayCardExceptionHandler;
 import com.example.money.util.exception.transfer.excep.IllegalDoingException;
@@ -26,8 +27,8 @@ import java.util.Map;
 public class TransferServiceImpl implements TransferService {
 
 
-    
-
+    @Autowired
+    private MailSenderClient mailSenderClient;
     @Autowired
     private TransferRepository transferRepository;
 
@@ -36,7 +37,7 @@ public class TransferServiceImpl implements TransferService {
 
     @Override
     @Transactional
-    public void transfer(TransferStory transferStory, String name, String surname, int senderId) throws CardNotFoundException, WrongBalanceException, SameCardNumbersException, IllegalDoingException {
+    public void transfer(TransferStory transferStory, String name, String surname, int senderId, String username) throws CardNotFoundException, WrongBalanceException, SameCardNumbersException, IllegalDoingException {
         IllegalDoingException.check(!payCardRepository.existsByNumberAndUserId(transferStory.getSenderN(), senderId), "illegal.transfer");
 
         PayCard sender = payCardRepository.getByNumber(transferStory.getSenderN());
@@ -64,6 +65,7 @@ public class TransferServiceImpl implements TransferService {
         transferStory.setSenderSurname(surname);
         transferStory.setSenderId(senderId);
         transferRepository.save(transferStory);
+        mailSenderClient.sendSimpleMessage(username, "transfer story: ", "money : " + transferStory.getMoney() + " from " + transferStory.getSenderName() + " " + transferStory.getSenderSurname() + " to " + payCardRepository.getByNumber(transferStory.getSenderN()).getUserName() + " " + payCardRepository.getByNumber(transferStory.getSenderN()).getUserSurname());
     }
 
     @Override
