@@ -31,15 +31,14 @@ public class TransferStory {
     private double money;
 
     private int senderId;
-
     private String senderName;
-
     private String senderSurname;
 
     private double senderBalanceBeforeTransaction;
     private double senderBalanceAfterTransaction;
     private double getterBalanceBeforeTransaction;
     private double getterBalanceAfterTransaction;
+
     @CreationTimestamp
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     @Temporal(TemporalType.TIMESTAMP)
