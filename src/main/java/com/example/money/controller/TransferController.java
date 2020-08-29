@@ -25,9 +25,6 @@ import java.util.Map;
 public class TransferController {
 
 
-
-
-
     @Autowired
     private SecurityContextProvider securityContextProvider;
 
@@ -37,7 +34,7 @@ public class TransferController {
     @PostMapping
     public ResponseEntity transfer(@Valid @RequestBody TransferStory transferStory, OAuth2Authentication oAuth2Authentication) throws SameCardNumbersException, WrongBalanceException, CardNotFoundException, IllegalDoingException {
         User sender = securityContextProvider.getByAuthentication(oAuth2Authentication);
-        transferService.transfer(transferStory, sender.getName(), sender.getSurname(), sender.getId(),sender.getUsername());
+        transferService.transfer(transferStory, sender.getName(), sender.getSurname(), sender.getId(), sender.getUsername());
         return ResponseEntity.ok(transferStory);
     }
 
@@ -46,5 +43,9 @@ public class TransferController {
         return ResponseEntity.ok(transferService.getAll());
     }
 
+    @GetMapping("/bySenderNumber")
+    public ResponseEntity getBySenderNum(String num) {
+        return ResponseEntity.ok(transferService.getBySenderN(num));
+    }
 
 }

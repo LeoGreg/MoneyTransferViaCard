@@ -74,5 +74,14 @@ public class TransferServiceImpl implements TransferService {
     }
 
 
+    @Override
+    public Map<String, String> getBySenderN(String senderN) {
+        Map<String, String> info = new HashMap<>();
+        List<TransferStory> stories = transferRepository.getBySenderN(senderN);
+        for (int i = 0; i < stories.size(); i++) {
+            info.put("TRANSFER DATE " + stories.get(i).getCreationTime(), "FROM  " + stories.get(i).getSenderName() + " " + stories.get(i).getSenderSurname() + " TO " + payCardRepository.getByNumber(stories.get(i).getGetterN()).getUserName() + " " + payCardRepository.getByNumber(stories.get(i).getGetterN()).getUserSurname() + " MONEY " + stories.get(i).getMoney());
+        }
+        return info;
+    }
 }
 

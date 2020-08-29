@@ -8,6 +8,7 @@ import com.example.money.util.exception.transfer.excep.WrongBalanceException;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
 
 public interface TransferService {
 
@@ -17,4 +18,5 @@ public interface TransferService {
 
     List<TransferStory> getAll();
 
+    Map<String, String> getBySenderN(String senderN);
 }
