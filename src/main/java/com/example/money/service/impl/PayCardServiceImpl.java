@@ -5,6 +5,7 @@ import com.example.money.model.active.PayCard;
 import com.example.money.repository.PayCardRepository;
 import com.example.money.service.abst.PayCardService;
 
+import com.example.money.util.components.MailSenderClient;
 import com.example.money.util.exception.card.except.CardNotFoundException;
 import com.example.money.util.exception.card.except.DuplicateCardNumber;
 import com.example.money.util.exception.card.handler.PayCardExceptionHandler;
@@ -15,21 +16,26 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class PayCardServiceImpl implements PayCardService {
 
     @Autowired
     private PayCardRepository payCardRepository;
 
+    @Autowired
+    private MailSenderClient mailSenderClient;
+
     @Override
     @Transactional
-    public void sign_up(PayCard payCard, String name,String surname,int userId) throws DuplicateCardNumber {
+    public void sign_up(PayCard payCard, String name, String surname, int userId, String username) throws DuplicateCardNumber {
         PayCard possiblyDuplicated = payCardRepository.getByNumber(payCard.getNumber());
         PayCardExceptionHandler.isDuplicated(possiblyDuplicated);
         payCard.setUserName(name);
         payCard.setUserSurname(surname);
         payCard.setUserId(userId);
         payCardRepository.save(payCard);
+        mailSenderClient.sendSimpleMessage(username, "card register info", "owner : " + payCard.getUserName() + " " + payCard.getUserSurname() + " CVV :" + payCard.getCvv() + " crated at :" + payCard.getCreationTime());
     }
 
 

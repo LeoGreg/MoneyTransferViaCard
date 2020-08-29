@@ -29,7 +29,7 @@ public class PayCardController {
     @PostMapping("/reg")
     public ResponseEntity sign_up(@Valid @RequestBody PayCard payCard, OAuth2Authentication oAuth2Authentication) throws DuplicateCardNumber, DuplicateCardNumber {
         User user = provider.getByAuthentication(oAuth2Authentication);
-        payCardService.sign_up(payCard, user.getName(),user.getSurname(),user.getId());
+        payCardService.sign_up(payCard, user.getName(),user.getSurname(),user.getId(),user.getUsername());
         return ResponseEntity.ok(payCard);
     }
 

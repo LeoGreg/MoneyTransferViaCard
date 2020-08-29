@@ -11,8 +11,9 @@ import java.util.Optional;
 
 public interface PayCardService {
 
+
     @Transactional
-    void sign_up(PayCard payCard, String name, String surname, int userId) throws DuplicateCardNumber;
+    void sign_up(PayCard payCard, String name, String surname, int userId, String username) throws DuplicateCardNumber;
 
     @Transactional
     void removeCard(int id);

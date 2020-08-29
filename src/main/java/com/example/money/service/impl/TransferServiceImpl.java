@@ -26,7 +26,7 @@ import java.util.Map;
 public class TransferServiceImpl implements TransferService {
 
 
-    private List<PayCard> payCardForGetter;
+    
 
     @Autowired
     private TransferRepository transferRepository;
