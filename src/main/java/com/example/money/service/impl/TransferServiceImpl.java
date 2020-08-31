@@ -68,18 +68,15 @@ public class TransferServiceImpl implements TransferService {
         mailSenderClient.sendSimpleMessage(username, "transfer story: ", "money : " + transferStory.getMoney() + " from " + transferStory.getSenderName() + " " + transferStory.getSenderSurname() + " to " + payCardRepository.getByNumber(transferStory.getSenderN()).getUserName() + " " + payCardRepository.getByNumber(transferStory.getSenderN()).getUserSurname());
     }
 
-    @Override
-    public List<TransferStory> getAll() {
-        return transferRepository.findAll();
-    }
+
 
 
     @Override
-    public Map<String, String> getBySenderN(String senderN) {
+    public Map<String, String> numNameSurUAId(String senderN, String name, String surname, int userId) {
         Map<String, String> info = new HashMap<>();
-        List<TransferStory> stories = transferRepository.getBySenderN(senderN);
+        List<TransferStory> stories = transferRepository.getBySenderNAndSenderNameAndSenderSurnameAndSenderId(senderN, name, surname, userId);
         for (int i = 0; i < stories.size(); i++) {
-            info.put("TRANSFER DATE " + stories.get(i).getCreationTime(), "FROM  " + stories.get(i).getSenderName() + " " + stories.get(i).getSenderSurname() + " TO " + payCardRepository.getByNumber(stories.get(i).getGetterN()).getUserName() + " " + payCardRepository.getByNumber(stories.get(i).getGetterN()).getUserSurname() + " MONEY " + stories.get(i).getMoney());
+            info.put("TRANSFER DATE " + stories.get(i).getCreationTime(), "FROM  " + name + " " + surname + " TO " + payCardRepository.getByNumber(stories.get(i).getGetterN()).getUserName() + " " + payCardRepository.getByNumber(stories.get(i).getGetterN()).getUserSurname() + " MONEY " + stories.get(i).getMoney());
         }
         return info;
     }

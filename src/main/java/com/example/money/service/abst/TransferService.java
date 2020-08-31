@@ -16,7 +16,7 @@ public interface TransferService {
     @Transactional
     void transfer(TransferStory transferStory, String name, String surname, int senderId, String username) throws CardNotFoundException, WrongBalanceException, SameCardNumbersException, IllegalDoingException;
 
-    List<TransferStory> getAll();
 
-    Map<String, String> getBySenderN(String senderN);
+
+    Map<String, String> numNameSurUAId(String senderN, String name, String surname, int userId);
 }

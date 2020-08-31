@@ -38,14 +38,10 @@ public class TransferController {
         return ResponseEntity.ok(transferStory);
     }
 
-    @GetMapping
-    public ResponseEntity getAll() {
-        return ResponseEntity.ok(transferService.getAll());
-    }
 
-    @GetMapping("/bySenderNumber")
-    public ResponseEntity getBySenderNum(String num) {
-        return ResponseEntity.ok(transferService.getBySenderN(num));
+    @GetMapping("/getStories")
+    public ResponseEntity getBySenderNum(String num, String name, String surname, OAuth2Authentication oAuth2Authentication) {
+        return ResponseEntity.ok(transferService.numNameSurUAId(num, name, surname, securityContextProvider.getByAuthentication(oAuth2Authentication).getId()));
     }
 
 }

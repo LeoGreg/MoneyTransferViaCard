@@ -9,9 +9,9 @@ import java.util.List;
 @Repository
 public interface TransferRepository extends JpaRepository<TransferStory, Integer> {
 
-    List<TransferStory> getBySenderN(String senderN);
+    List<TransferStory> getBySenderNAndSenderNameAndSenderSurnameAndSenderId(String num, String name, String surname,int userId);
 
-    List<TransferStory> getByGetterN(String getterN);
+    List<TransferStory> getBySenderN(String getterN);
 
     TransferStory getById(int id);
 
